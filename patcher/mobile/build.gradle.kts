@@ -84,14 +84,19 @@ tasks.register("generate-app-debug") {
     dependsOn("clear-cache", "assembleDebug")
 
     doLast {
+        val apkDir = file("${buildDir}/outputs/apk/debug")
+        val apkFile = apkDir.listFiles()?.firstOrNull { it.extension == "apk" }
+
+        requireNotNull(apkFile) { "❌ No APK file found in debug folder!" }
+
         val outputName = "ifl-pmobile-v$projectVersion-$commitHash-debug.apk"
-        file("${project.projectDir}/build/outputs/apk/debug/instafel.updater-debug.apk")
-            .copyTo(file("${project.projectDir}/output/$outputName"), overwrite = true)
-        println("APK successfully copied: $outputName")
+        apkFile.copyTo(file("${project.projectDir}/output/$outputName"), overwrite = true)
+
+        println("✅ APK successfully copied: $outputName")
 
         delete("${project.projectDir}/build")
-        println("Build caches cleared.")
-        println("All tasks completed succesfully")
+        println("🧹 Build caches cleared.")
+        println("✅ All tasks completed successfully")
     }
 }
 
