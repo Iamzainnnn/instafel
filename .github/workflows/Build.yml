@@ -1,0 +1,38 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Download Android SDK tools
+        uses: android-actions/setup-android@v3
+
+      - name: Build Debug APK using system Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.7
+          arguments: generate-app-debug
+          build-root-directory: patcher/mobile
+
+      - name: Upload APK (Debug)
+        uses: actions/upload-artifact@v4
+        with:
+          name: instafel-debug-apk
+          path: patcher/mobile/output/*.apk
