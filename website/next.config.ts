@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_SITE_URL: "https://instafel.mamiiblt.me",
+    NEXT_PUBLIC_SITE_URL: "https://instafel.app",
   },
   redirects: async () => {
     return [
@@ -30,7 +30,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/guide",
-        destination: "/guides",
+        destination: "/wiki",
+        permanent: true,
+      },
+      {
+        source: "/guides",
+        destination: "/wiki",
         permanent: true,
       },
     ];

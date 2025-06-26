@@ -79,7 +79,7 @@ public class CoreHandler {
         loadCoreInfo();
     }
 
-    public static void downloadCoreJAR(UpdateInfo updateInfo) {
+    public static void downloadCoreJAR(UpdateInfo updateInfo, File CORE_JAR_FILE) {
         String URL = "https://github.com/mamiiblt/instafel/raw/refs/heads/ft-releases/p-core/dist/ifl-pcore-" + updateInfo.commit + ".jar";
     
         OkHttpClient client = new OkHttpClient();
@@ -127,7 +127,7 @@ public class CoreHandler {
                             Log.severe("Latest core isn't compatible with your patcher, please update patcher for use latest core");
                             System.exit(-1);
                         } else {
-                            downloadCoreJAR(uInfo);
+                            downloadCoreJAR(uInfo, CORE_JAR_FILE);
                             loadCoreJAR();
                             Log.info("Core updated (" + uInfo.commit + ")");
                         }
@@ -144,7 +144,7 @@ public class CoreHandler {
                 Log.severe("Latest core isn't compatible with your patcher, please update patcher for use latest core");
                 System.exit(-1);
             } else {
-                downloadCoreJAR(uInfo);
+                downloadCoreJAR(uInfo, CORE_JAR_FILE);
                 loadCoreJAR();
             }
         }

@@ -12,10 +12,12 @@ export const namespaces = [
   "backup",
   "common",
   "download",
-  "guides",
   "home",
   "library_backup",
   "updater",
+  "library_flag",
+  "fcategories",
+  "flag",
+  "flags",
 ];
-export const cookieName = "i18next";
-export const headerName = "x-i18next-current-language";
+export const cookieName = "WPG_LANG";

@@ -22,18 +22,104 @@ import {
   Download,
   GithubIcon,
   Box,
-  Globe,
+  ListCollapse,
+  FlagIcon,
 } from "lucide-react";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { useT } from "@/i18n/client";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
+import { useSidebar } from "./ui/sidebar";
+import WikiLanguageWarning from "./WikiLanguageWarning";
+import { Separator } from "./ui/separator";
+
+function SidebarToggleButton() {
+  const { toggleSidebar } = useSidebar();
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleSidebar}
+      className="relative transition-all duration-200 hover:bg-accent hover:scale-105 "
+      aria-label="Toggle Sidebar Menu"
+    >
+      <ListCollapse className="h-5 w-5" />
+    </Button>
+  );
+}
+
+function InstafelLogoPart() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      {pathname.includes("wiki") && (
+        <div className="hidden md:block">
+          <SidebarToggleButton />
+        </div>
+      )}
+
+      {pathname.includes("wiki") ? (
+        <div className="md:hidden flex items-center space-x-2 transition-transform duration-200 hover:scale-105">
+          <SidebarToggleButton />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-6"
+          />
+          <Link href={"/"}>
+            <motion.div
+              initial={{ opacity: 0, rotate: -10 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ rotate: -10 }}
+            >
+              <LucideInstagram className="h-6 w-6" />
+            </motion.div>
+          </Link>
+          <Link href={"/"}>
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="text-lg font-medium text-foreground"
+            >
+              Instafel
+            </motion.span>
+          </Link>
+        </div>
+      ) : (
+        <Link
+          href="/"
+          className="flex items-center space-x-2 transition-transform duration-200 hover:scale-105"
+        >
+          <motion.div
+            initial={{ opacity: 0, rotate: -10 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ rotate: -10 }}
+          >
+            <LucideInstagram className="h-6 w-6" />
+          </motion.div>
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+            className="text-lg font-medium text-foreground"
+          >
+            Instafel
+          </motion.span>
+        </Link>
+      )}
+    </>
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
-  const { t } = useT("common");
+  const { t } = useTranslation("common");
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -65,13 +151,17 @@ export default function Navbar() {
 
   const navItems = [
     {
-      title: t("navbar.items.guide"),
-      href: "/guides",
+      title: "Wiki",
+      href: "/wiki",
     },
     {
       title: t("navbar.items.backups"),
       href: "/library_backup",
     },
+    /*{
+      title: t("navbar.items.flags"),
+      href: "/library_flag",
+    },*/
     {
       title: t("navbar.items.updater"),
       href: "/about_updater",
@@ -98,27 +188,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center space-x-2 transition-transform duration-200 hover:scale-105"
-        >
-          <motion.div
-            initial={{ opacity: 0, rotate: -10 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ rotate: -10 }}
-          >
-            <LucideInstagram className="h-6 w-6" />
-          </motion.div>
-          <motion.span
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
-            className="text-lg font-medium text-foreground"
-          >
-            Instafel
-          </motion.span>
-        </Link>
+        <InstafelLogoPart />
 
         <div className="hidden md:flex flex-1 justify-center">
           <NavigationMenu className="relative">
@@ -127,7 +197,6 @@ export default function Navbar() {
                 {navItems.map((link, index) => {
                   const isActive =
                     pathname === (link.href.split("?")[0] || link.href);
-
                   if (link.title === t("navbar.items.src_code")) {
                     return null;
                   }
@@ -154,13 +223,23 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            <LanguageSwitcher />
-          </motion.div>
+          {!pathname.includes("/wiki") ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              <LanguageSwitcher />
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <WikiLanguageWarning />
+            </motion.div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -226,10 +305,12 @@ export default function Navbar() {
                         pathname === (link.href.split("?")[0] || link.href);
                       var MobileIcon = null;
 
-                      if (link.title == t("navbar.items.guide")) {
+                      if (link.title == "Wiki") {
                         MobileIcon = BookOpenText;
                       } else if (link.title == t("navbar.items.backups")) {
                         MobileIcon = FileCog2Icon;
+                      } else if (link.title == t("navbar.items.flags")) {
+                        MobileIcon = FlagIcon;
                       } else if (link.title == t("navbar.items.updater")) {
                         MobileIcon = RefreshCcwDot;
                       } else if (link.title == t("navbar.items.src_code")) {

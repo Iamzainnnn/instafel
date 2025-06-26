@@ -38,18 +38,6 @@ application {
     mainClass = "me.mamiiblt.instafel.patcher.cli.Main"
 }
 
-tasks.register("clear-cache") {
-    val filesToDelete = listOf(
-        file("${project.projectDir}/bin"),
-        file("${project.projectDir}/build"),
-    )
-
-    delete(filesToDelete)
-    doLast {
-        println("Cache successfully deleted.")
-    }
-}
-
 tasks.shadowJar {
     archiveBaseName = "ifl-cli"
     archiveClassifier = ""
@@ -62,8 +50,6 @@ tasks.shadowJar {
             "Patcher-Cli-Tag" to projectTag
         )
     }
-
-    mustRunAfter("clear-cache")
 }
 
 tasks.withType<JavaCompile> {
@@ -71,12 +57,9 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.register("build-jar") {
-    dependsOn("clear-cache", "shadowJar")
+    dependsOn("shadowJar")
 
     doLast {
-        delete(file("${project.projectDir}/build"))
-        delete(file("${project.projectDir}/bin"))
-        println("Temp build caches cleared.")
         println("All build tasks completed successfully")
     }
 }

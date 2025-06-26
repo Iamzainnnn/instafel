@@ -33,8 +33,8 @@ local.properties
 /patcher/core/build
 /patcher/cli/bin
 /patcher/cli/build
-/patcher/core/src/main/resources/patcher-core.properties
-/patcher/cli/src/main/resources/patcher.properties
+/patcher/core/src/main/resources/patches.json
+
 
 # Instafel GPlayAPI
 

@@ -1,0 +1,10 @@
+{
+  "search_flag": "Search by flag name...",
+  "all_users": "All Users",
+  "clear_filters": "Clear Filters",
+  "added_by": "Added by {{name}}",
+  "uploaded_at": "Uploaded at {{date_str}}",
+  "removed_with": "Removed with v{{version}}",
+  "loading": "Loading...",
+  "flag_found": "There are a total of {{fcount}} flags in this category"
+}

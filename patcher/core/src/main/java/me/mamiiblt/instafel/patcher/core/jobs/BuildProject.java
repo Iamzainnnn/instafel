@@ -288,27 +288,29 @@ public class BuildProject {
         }
     }
 
-    private void generateBuildInfo(String CORE_COMMIT, String PVERSION, String PTAG) {
+    private void generateBuildInfo(String CORE_COMMIT, String PTAG, String PVERSION) {
         this.buildInfo = new JSONObject();
         buildInfo.put("manifest_version", 1);
         if (isProductionMode == false) {
             buildInfo.put("clone_generated", isCloneGenerated);
         }
         JSONObject patcherInfo = new JSONObject();
-        patcherInfo.put("version", PVERSION);
         patcherInfo.put("commit", CORE_COMMIT);
         patcherInfo.put("channel", PTAG);
+        patcherInfo.put("version", PVERSION);        
         buildInfo.put("patcher", patcherInfo);
 
         JSONObject patcherData = new JSONObject();
         patcherData.put("build_date", BUILD_TS);
-        JSONObject ifl = new JSONObject();
-        ifl.put("version", Integer.parseInt(IFL_VERSION));
-        ifl.put("gen_id", GENERATION_ID);
+        if (isProductionMode) {
+            JSONObject ifl = new JSONObject();
+            ifl.put("version", Integer.parseInt(IFL_VERSION));
+            ifl.put("gen_id", GENERATION_ID);
+            patcherData.put("ifl", ifl);
+        }
         JSONObject ig = new JSONObject();
         ig.put("version", IG_VERSION);
         ig.put("ver_code", IG_VER_CODE);
-        patcherData.put("ifl", ifl);
         patcherData.put("ig", ig);
         buildInfo.put("patcher_data", patcherData);
 
@@ -336,7 +338,6 @@ public class BuildProject {
         buildInfo.put("hash", hash);
 
 
-        
         File bInfoFile = new File(Utils.mergePaths(buildFolder.getAbsolutePath(), "build_info.json"));
         
         try (FileWriter file = new FileWriter(bInfoFile)) {

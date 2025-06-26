@@ -1,8 +1,8 @@
 {
   "navbar": {
     "items": {
-      "guide": "Guía",
       "backups": "Backups",
+      "flags": "Banderas",
       "updater": "Actualizador",
       "src_code": "Código Fuente",
       "download": "Descargar"
@@ -17,11 +17,12 @@
     "2": "Instafel no tiene ninguna afiliación con Meta ni con Instagram",
     "3": "Desarrollado con ❤️ por mamiiblt",
     "4": "Recursos",
-    "5": "Guías",
+    "5": "Wiki",
     "6": "Backups",
     "7": "Enlaces",
     "8": "Actualizador",
     "9": "Descargar",
-    "10": "Código Fuente"
+    "10": "Código Fuente",
+    "11": "Banderas"
   }
 }

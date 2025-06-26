@@ -5,21 +5,8 @@
   },
   "patcher": {
     "cli_version": "2.1.0",
-    "mobile_version": "2.1.0",
     "core_supported_version": "2.1.0",
-    "tag": "release",
-    "mobileAndroidConfig": {
-      "keystore": {
-        "ksPath": "/config/keystores/instafel-pmobile.jks",
-        "ksKeyPass": "value",
-        "ksAlias": "value",
-        "ksPass": "value"
-      }
-    },
-    "dependencyConfig": {
-      "okhttp_version": "4.9.0",
-      "materialyoupreferences_version": "0.2.5"
-    }
+    "tag": "release"
   },
   "website": {
     "version": null,

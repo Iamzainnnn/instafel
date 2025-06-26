@@ -9,23 +9,15 @@ import {
 } from "./ui/dropdown-menu";
 import { Globe } from "lucide-react";
 import { Button } from "./ui/button";
-import { useT } from "@/i18n/client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function LanguageSwitcher() {
-  const { i18n } = useT();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { i18n } = useTranslation();
 
   const changeLanguage = (newLng: string) => {
-    document.cookie = `i18next=${newLng}; path=/`;
-    const segments = pathname.split("/");
-    segments[1] = newLng;
-    const newPath = segments.join("/");
-    const queryString = searchParams.toString();
-    const fullPath = queryString ? `${newPath}?${queryString}` : newPath;
-    router.push(fullPath);
+    i18n.changeLanguage(newLng, () => {
+      document.cookie = `${cookieName}=${newLng}; path=/`;
+    })
   };
 
   return (

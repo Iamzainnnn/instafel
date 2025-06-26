@@ -12,6 +12,7 @@ public class PInfos {
         String desc();
         String shortname();
         boolean isSingle();
+        String className() default "unknown_class";
     }
 
     @Retention(RetentionPolicy.RUNTIME) 

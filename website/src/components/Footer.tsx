@@ -3,9 +3,10 @@
 import React, { Suspense } from "react";
 import { FooterLoading } from "./loading";
 import {
-  Book,
+  BookOpenText,
   Download,
   FileCog2Icon,
+  FlagIcon,
   GithubIcon,
   LucideInstagram,
   RefreshCcwDot,
@@ -14,11 +15,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useT } from "@/i18n/client";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
   const [loading, setLoading] = React.useState(true);
-  const { t } = useT("common");
+  const { t } = useTranslation("common");
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,10 +70,10 @@ export default function Footer() {
                     transition={{ type: "spring", stiffness: 400 }}
                   >
                     <Link
-                      href="/guides"
+                      href="/wiki"
                       className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
                     >
-                      <Book className="w-4 h-4" />
+                      <BookOpenText className="w-4 h-4" />
                       {t("footer.5")}
                     </Link>
                   </motion.li>
@@ -86,6 +87,18 @@ export default function Footer() {
                     >
                       <FileCog2Icon className="w-4 h-4" />
                       {t("footer.6")}
+                    </Link>
+                  </motion.li>
+                  <motion.li
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <Link
+                      href="/library_flag"
+                      className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
+                    >
+                      <FlagIcon className="w-4 h-4" />
+                      {t("footer.11")}
                     </Link>
                   </motion.li>
                 </ul>

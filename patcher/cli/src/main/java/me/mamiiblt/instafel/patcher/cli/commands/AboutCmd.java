@@ -16,8 +16,6 @@ public class AboutCmd implements Command {
             "Baksmali Ver.  : v" + ApktoolProperties.getBaksmaliVersion(),
             "Telegram       : t.me/instafel",
             "Repository     : github.com/mamiiblt/instafel",
-            "",
-            "Developed with ❤️ by mamiiblt"
         };
 
         for (String line : helpLines) {

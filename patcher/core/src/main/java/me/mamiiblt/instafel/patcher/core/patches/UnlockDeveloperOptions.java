@@ -37,41 +37,26 @@ public class UnlockDeveloperOptions extends InstafelPatch {
     InstafelTask getDevOptionsTask = new InstafelTask("Get dev options class from whoptions") {
         @Override
         public void execute() throws IOException {
-            String imageDebugSessionHelperPath = "com/instagram/debug/image/sessionhelper/ImageDebugSessionHelper.smali";
-            List<File> whOptionsFileQuery = smaliUtils.getSmaliFilesByName(imageDebugSessionHelperPath);
-            File imageDebugSessionSmali = null;
-            if (whOptionsFileQuery.size() == 0 || whOptionsFileQuery.size() > 1) {
-                failure("ImageDebugSessionHelper file can't be found / selected.");
+            String igDeadCodeDetectionManagerPath = "com/instagram/deadcodedetection/IgDeadCodeDetectionManager";
+            List<File> detectorFileQuery = smaliUtils.getSmaliFilesByName(igDeadCodeDetectionManagerPath);
+            File igDeadCodeSessionSmali = null;
+            if (detectorFileQuery.size() == 0 || detectorFileQuery.size() > 1) {
+                failure("IgDeadCodeDetectionManager file can't be found / selected.");
             } else {
-                imageDebugSessionSmali = whOptionsFileQuery.get(0);
-                Log.info("ImageDebugSessionHelper file is " + imageDebugSessionSmali.getPath());
+                igDeadCodeSessionSmali = detectorFileQuery.get(0);
+                Log.info("IgDeadCodeDetectionManager file is found");
             }
 
-            List<String> imageDebugContent = smaliUtils.getSmaliFileContent(
-                imageDebugSessionSmali.getAbsolutePath());       
-            List<LineData> methodHeaderLines =  smaliUtils.getContainLines(
-                imageDebugContent, "method", "shouldEnableImageDebug");
+            List<String> detectorContent = smaliUtils.getSmaliFileContent(igDeadCodeSessionSmali.getAbsolutePath());
+            List<LineData> linesWithInvokeAndUserSession = smaliUtils.getContainLines(
+                detectorContent, "UserSession", "invoke-static"
+            );
 
-            if (methodHeaderLines.size() != 1) {
-                failure("shouldEnableImageDebug method can't found!");
+            if (linesWithInvokeAndUserSession.size() != 1) {
+                failure("Static caller opcode can't found or more than 1!");
             }
 
-            LineData methodHeader = methodHeaderLines.get(0);
-            List<String> methodContent = new ArrayList<>();
-            for (int i = methodHeader.getNum(); i < imageDebugContent.size(); i++) {
-            String line = imageDebugContent.get(i);
-            methodContent.add(line);
-                if (line.contains(".end method")) {
-                    break;
-                }
-            }
-
-            List<LineData> callLines = smaliUtils.getContainLines(methodContent, 
-            "invoke-static", "LX/", "A00");
-            if (callLines.size() == 0) {
-                failure("callLies is more than 1");
-            }
-            LineData callLine = callLines.get(0);
+            LineData callLine = linesWithInvokeAndUserSession.get(0);
             SmaliInstruction callLineInstruction = SmaliParser.parseInstruction(callLine.getContent(), callLine.getNum());
             className = callLineInstruction.getClassName().replace("LX/", "").replace(";", "");
             success("DevOptions class is " + className);

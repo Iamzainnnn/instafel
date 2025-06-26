@@ -100,7 +100,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         updaterGuide.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("https://instafel.mamiiblt.me/about_updater"));
+                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("https://instafel.app/about_updater"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
                 return false;

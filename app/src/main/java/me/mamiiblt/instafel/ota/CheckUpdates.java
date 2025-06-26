@@ -168,7 +168,7 @@ public class CheckUpdates {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        GeneralFn.openInWebBrowser(activity, "https://instafel.mamiiblt.me/backup?id=" + backupId);
+                        GeneralFn.openInWebBrowser(activity, "https://instafel.app/backup?id=" + backupId);
                     }
                 });
         instafelDialog.addSpace("bottom_space", 27);

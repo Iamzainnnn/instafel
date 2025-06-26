@@ -1,11 +1,6 @@
 package me.mamiiblt.instafel.patcher.core.providers;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.List;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

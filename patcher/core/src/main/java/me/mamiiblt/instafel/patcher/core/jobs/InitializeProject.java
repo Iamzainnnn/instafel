@@ -1,9 +1,7 @@
 package me.mamiiblt.instafel.patcher.core.jobs;
 
 import java.io.File;
-import java.io.IOException;
 
-import brut.androlib.exceptions.AndrolibException;
 import brut.directory.ExtFile;
 import me.mamiiblt.instafel.patcher.core.source.SourceManager;
 import me.mamiiblt.instafel.patcher.core.source.SourceUtils;
